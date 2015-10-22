@@ -124,7 +124,7 @@ namespace LyncLights
                 case ContactAvailability.BusyIdle:
                     return 'b';
                 case ContactAvailability.DoNotDisturb:
-                    return 'b';
+                    return 'd';
                 case ContactAvailability.FreeIdle:
                     return 'a';
                 case ContactAvailability.TemporarilyAway:

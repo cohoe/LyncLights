@@ -14,6 +14,10 @@ int ocsAway = 119; // w
 int ocsUnknownColor[] = {0, 0, 0}; // Nothing
 int ocsDebug = 48; // 0
 int ocsDebugColor[] = {255, 255, 255}; // ALL
+int ocsRainbow = 114; // r
+int ocsRainbowColor[] = {0, 0, 0};
+
+boolean rainbowMode = true;
 
 //int (*currentColor)[3];
 //int*[3] currentColor;
@@ -55,13 +59,26 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 int inLoop = 1;
+
+int rainbowRedValue = 0;
+int rainbowGreenValue = 0;
+int rainbowBlueValue = 0;
+
 void loop() {
 
   int brightness = analogRead(potPin);
   //Serial.print("Brightness is ");
   //Serial.println(brightness, DEC);
   
+  if (rainbowMode == true) {
+    if(ocsRainbowColor[0] < 255) {
+      ocsRainbowColor[0]++;
+      delay(50);
+    }
+  }
+  
   if (Serial.available() > 0) {
+    Serial.println("Doing a char");
     // read the incoming byte:
     incomingByte = Serial.read();
     
@@ -86,23 +103,33 @@ void loop() {
       
       
       if (incomingByte == ocsAvailable) {
-        //displayColor(ocsAvailableColor, brightness); 
+        //displayColor(ocsAvailableColor, brightness);
+        rainbowMode = false;
         currentColor = ocsAvailableColor;
       }
       else if (incomingByte == ocsBusy) {
         //displayColor(ocsBusyColor, brightness); 
+        rainbowMode = false;
         currentColor = ocsBusyColor;
       }
       else if (incomingByte == ocsAway) {
         //displayColor(ocsAwayColor, brightness); 
+        rainbowMode = false;
         currentColor = ocsAwayColor;
       }
       else if (incomingByte == ocsDebug) {
+        rainbowMode = false;
         currentColor = ocsDebugColor;
+      }
+      else if (incomingByte == ocsRainbow) {
+        rainbowMode = true;
+        currentColor = ocsRainbowColor;
       }
       else {
         //displayColor(ocsUnknownColor, brightness); 
-        currentColor = ocsUnknownColor;
+        //currentColor = ocsUnknownColor;
+        rainbowMode = true;
+        currentColor = ocsRainbowColor;
       }
     
   }
