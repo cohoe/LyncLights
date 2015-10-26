@@ -130,9 +130,9 @@ namespace LyncLights
                 case ContactAvailability.TemporarilyAway:
                     return 'w';
                 case ContactAvailability.Offline:
-                    return '0';
+                    return 'r';
                 default:
-                    return '0';
+                    return 'r';
             }
         }
 
